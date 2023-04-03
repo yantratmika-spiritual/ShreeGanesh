@@ -6,7 +6,7 @@
  * Author: Vikas K Solegaonkar (vikas.solegaonkar@thinkprosystems.com)         *
  * Copyright(c) ThinkPro Systems Pty Ltd, 2023                                 *
  *                                                                             *
- * Last Modified: Wed Mar 15 2023                                              *
+ * Last Modified: Mon Apr 03 2023                                              *
  * Modified By: Vikas K Solegaonkar                                            *
  *                                                                             *
  * HISTORY:                                                                    *
@@ -23,8 +23,13 @@ import 'package:shreeganesh/pages/darshan.dart';
 import 'package:shreeganesh/pages/readscripture.dart';
 import 'package:shreeganesh/pages/scriptures.dart';
 import 'package:shreeganesh/pages/routine.dart';
+import 'package:shreeganesh/widgets/contentstream.dart';
+import 'package:shreeganesh/widgets/contentwidget.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  AudioManager.init();
+  ContentStream.init();
   runApp(const MyApp());
 }
 
@@ -62,36 +67,28 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    AudioManager.init();
-    AudioManager.playAsset("audio/mixkit-church-bell-loop-621.m4a", true);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.white70,
-        child: const Center(
-          child: Text("Home Page"),
-        ),
+        child: widgetList(),
       ),
       bottomNavigationBar: CommonWidgets.getBottomNavigationBar(context, 0),
+    );
+  }
+
+  ListView widgetList() {
+    return ListView.builder(
+      itemCount: ContentStream.messages.length,
+      itemBuilder: (context, index) {
+        return ContentWidget(
+          data: ContentStream.messages[index],
+        );
+      },
     );
   }
 }

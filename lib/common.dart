@@ -6,7 +6,7 @@
  * Author: Vikas K Solegaonkar (vikas.solegaonkar@thinkprosystems.com)         *
  * Copyright(c) ThinkPro Systems Pty Ltd, 2023                                 *
  *                                                                             *
- * Last Modified: Sat Mar 11 2023                                              *
+ * Last Modified: Mon Apr 03 2023                                              *
  * Modified By: Vikas K Solegaonkar                                            *
  *                                                                             *
  * HISTORY:                                                                    *
@@ -94,6 +94,91 @@ class CommonWidgets {
             break;
         }
       },
+    );
+  }
+
+  static AppBar getAppBar(BuildContext context, String title) {
+    return AppBar(
+      title: Text(title),
+      actions: <Widget>[
+        PopupMenuButton<String>(
+          onSelected: (String choice) {
+            switch (choice) {
+              case ROUTINE:
+                while (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                Navigator.pushNamed(context, '/routine');
+                break;
+              case DARSHAN:
+                while (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                Navigator.pushNamed(context, '/darshan');
+                break;
+              case SCRIPTURES:
+                while (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                Navigator.pushNamed(context, '/scriptures');
+                break;
+              case CHANTS:
+                while (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                Navigator.pushNamed(context, '/chants');
+                break;
+            }
+          },
+          itemBuilder: (BuildContext context) {
+            return choices.map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(choice),
+              );
+            }).toList();
+          },
+        ),
+      ],
+    );
+  }
+
+  static Widget header(String title) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+
+  static Widget subHeader(String title) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+  static Widget bodyText(String title) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
     );
   }
 }

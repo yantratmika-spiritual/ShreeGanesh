@@ -6,7 +6,7 @@
  * Author: Vikas K Solegaonkar (vikas.solegaonkar@thinkprosystems.com)         *
  * Copyright(c) ThinkPro Systems Pty Ltd, 2023                                 *
  *                                                                             *
- * Last Modified: Sun Mar 12 2023                                              *
+ * Last Modified: Mon Apr 03 2023                                              *
  * Modified By: Vikas K Solegaonkar                                            *
  *                                                                             *
  * HISTORY:                                                                    *
@@ -29,7 +29,6 @@ class AudioManager {
   }
 
   static void playAsset(String asset, bool loop) {
-    // "audio/mixkit-church-bell-loop-621.m4a"
     player.play(AssetSource(asset), mode: PlayerMode.lowLatency);
     if (loop) {
       player.setReleaseMode(ReleaseMode.loop);
@@ -38,8 +37,13 @@ class AudioManager {
     }
   }
 
-  static void playUrl(String url) {
+  static void playUrl(String url, bool loop) {
     player.play(UrlSource(url));
+    if (loop) {
+      player.setReleaseMode(ReleaseMode.loop);
+    } else {
+      player.setReleaseMode(ReleaseMode.stop);
+    }
   }
 
   void pause() {
@@ -52,5 +56,9 @@ class AudioManager {
 
   void stop() {
     player.stop();
+  }
+
+  static void playBell() {
+    playAsset("audio/bell05.mp3", false);
   }
 }
